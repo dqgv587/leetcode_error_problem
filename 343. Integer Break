@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int integerBreak(int n) {
+        int num=0;
+        vector<int> ns(n+1,0);
+        ns[0]=0;
+        ns[1]=0;
+        ns[2]=1;
+        num=countnum(n,ns);
+        return num;
+    }
+    int countnum(int n,vector<int>& ns)
+    {
+        if(n<=2)
+        {
+            return ns[n];
+        }
+        for(int i=3;i<n+1;i++)
+        {
+            for(int j=1;j<=(i/2);j++)
+            {
+                ns[i]=max(ns[i],max(j*(i-j),j*ns[i-j]));
+            }
+        }
+        return ns[n];
+    }
+};
+
+Notes：动规方程：对于一个数n的划分j和n-j。 
+判断保留那一种使得n的划分数更大
+ns[i]=max(ns[i],j*max((i-j),ns[i-j]));      由于对称性，能够保证包含住最大结果
+或者
+dp[i] = max(dp[i], max(j, dp[j]) * max(i - j, dp[i - j]));    更直观

@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int& n) {
+        vector<vector<int>> res(n,vector<int>(n,0));
+        int ltop=1;
+        int lim=ceil(n/2.0);
+        int idx=0;
+        int x=n;
+        while(idx<lim)
+        {
+            if(idx==(x-idx-1))
+            {
+                res[x-idx-1][x-idx-1]=ltop;
+                break;
+            }
+            int btom=ltop+2*(n-1-idx);
+            for(int i=idx;i<(n-1);i++)
+            {
+                res[idx][i]=ltop;
+                if(idx!=i)
+                {
+                    res[i][idx]=2*btom-res[idx][i];
+                }
+                ltop+=1;
+            }
+            for(int i=idx;i<(n-1);i++)
+            {
+                res[i][n-1]=ltop;
+                res[n-1][i]=2*btom-res[i][n-1];
+                ltop+=1;
+            }
+            res[n-1][n-1]=ltop;
+            ltop+=2*(n-1-idx);
+            n=n-1;
+            idx+=1;
+        }
+        return res;
+    }
+};

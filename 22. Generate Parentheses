@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int nsz=0;
+    vector<string> result;
+    vector<string> generateParenthesis(int n) {
+        helper("",n,0);
+        return result;
+    }
+    
+    void helper(string s, int leftpare_need, int moreleft)
+{
+	if(leftpare_need == 0 && moreleft == 0)
+	{
+	    result.push_back(s);
+	    return;
+	}
+	if(leftpare_need > 0)
+		helper(s + "(", leftpare_need - 1, moreleft+1);
+	if(moreleft > 0)
+		helper(s + ")", leftpare_need, moreleft - 1);
+}
+    
+};
+
+
+NOTES: 回溯法，跳出条件left==0&&right==0。使用string自增长的存储满足条件的
+
+vector<string> generateParenthesis(int n) {
+        vector<string> ret;
+        helper(ret, "", n, n);
+        return ret;
+    }
+void helper(vector<string> & res, string str, int left, int right){
+        if(left == 0 && right == 0){
+            res.push_back(str);
+            return;
+        }
+        if(left > 0) helper(res, str + "(", left - 1, right);
+        if(right > left) helper(res, str + ")", left, right - 1);
+    }

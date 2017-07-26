@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int buy = INT_MIN, pre_buy = 0, sell = 0, pre_sell = 0;
+        for (int price : prices) {
+            pre_buy = buy;
+            buy = max(pre_sell - price, pre_buy);
+            pre_sell = sell;
+            sell = max(pre_buy + price, pre_sell);
+        }
+        return sell;
+    }
+};
+
+Notes：但是对于这一天是否持股只有两种状态：持股状态（buy），没有持股状态（sell，cooldown）。
+
+对于当天持股状态时，至当天的为止的最大利润有两种可能：1、今天没有买入，跟昨天持股状态一样；2、今天买入，昨天是冷却期，利润是前天卖出股票时候得到的利润减去今天股票的价钱。 二者取最大值。
+
+对于当天未持股状态，至当天为止的最大利润有两种可能：1、今天没有卖出，跟昨天未持股状态一样；2、昨天持有股票，今天卖出了，利润是昨天持有股票时候的利润加上今天股票的价钱。 二者取最大值。

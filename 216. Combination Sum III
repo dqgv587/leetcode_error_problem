@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<vector<int>> res;
+    int k1=0;
+    vector<vector<int>> combinationSum3(int k, int n) {
+        k1=k;
+        vector<int> param;
+        int idx=1;
+        perm(param,n,idx);
+        return res;
+    }
+    
+    void perm(vector<int>& param,int n,int idx)
+    {
+        if(n==0&&param.size()==k1)
+        {
+            res.push_back(param);
+            return;
+        }
+        if(n<idx)
+        {
+            return;
+        }
+        for(int i=idx;i<=n;i++)
+        {
+            if(n>=i&&i<10)
+            {
+                 param.push_back(i);
+                 perm(param,n-i,i+1);
+                 param.pop_back();
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+};
+
+Notes:递归求解，使用一个vector存储路径，当满足条件时，将vector存到结果矩阵，并反向递归清空vector
